@@ -68,13 +68,13 @@ def login():
     password = request.json.get("password")
 
     if not username or not password:
-        return jsonify({"message": "Missing required fields"}), 400
+        return jsonify({"msg": "Missing required fields"}), 400
 
     user = User.query.filter_by(username=username).first()
     if not user:
-        return jsonify({"message": "Invalid username"}), 401
+        return jsonify({"msg": "Invalid username"}), 401
     if not bcrypt.check_password_hash(user.password, password):
-        return jsonify({"message": "Invalid password"}), 401
+        return jsonify({"msg": "Invalid password"}), 401
 
     access_token = create_access_token(identity=user.id, fresh=True)
     refresh_token = create_refresh_token(identity=user.id)
@@ -82,7 +82,7 @@ def login():
     return (
         jsonify(
             {
-                "message": "Login successful",
+                "msg": "Login successful",
                 "access_token": access_token,
                 "refresh_token": refresh_token,
             }
@@ -159,7 +159,7 @@ def update_user():
         current_user.phone = phone
     db.session.commit()
 
-    return jsonify({"message": "User updated successfully"}), 200
+    return jsonify({"msg": "User updated successfully"}), 200
 
 
 @jwt_required()
@@ -174,7 +174,7 @@ def delete_user():
     db.session.delete(current_user)
     db.session.commit()
 
-    return (jsonify({"message": f"User deleted successfully"}), 200)
+    return (jsonify({"msg": f"User deleted successfully"}), 200)
 
 
 @jwt_required()
@@ -189,16 +189,16 @@ def change_password():
     new_password = request.json.get("new_password")
 
     if not old_password or not new_password:
-        return jsonify({"message": "Missing required fields"}), 400
+        return jsonify({"msg": "Missing required fields"}), 400
 
     if not bcrypt.check_password_hash(current_user.password, old_password):
-        return jsonify({"message": "Invalid old password"}), 401
+        return jsonify({"msg": "Invalid old password"}), 401
 
     hashed_password = bcrypt.generate_password_hash(new_password).decode("utf-8")
     current_user.password = hashed_password
     db.session.commit()
 
-    return jsonify({"message": "Password changed successfully"}), 200
+    return jsonify({"msg": "Password changed successfully"}), 200
 
 
 def get_password_reset_token():
@@ -207,10 +207,10 @@ def get_password_reset_token():
     """
     email = request.json.get("email")
     if not email:
-        return jsonify({"message": "Missing required field: email"}), 400
+        return jsonify({"msg": "Missing required field: email"}), 400
     user = User.query.filter_by(email=email).first()
     if not user:
-        return jsonify({"message": f"User not found with email {email}"}), 404
+        return jsonify({"msg": f"User not found with email {email}"}), 404
 
     token = generate_password_reset_token()
     redis_client.set(token, user.id, ex=60 * 30)
@@ -221,7 +221,7 @@ def get_password_reset_token():
     """
     send_email(user, "OSAD Password Reset", email_body)
 
-    return jsonify({"message": "Password reset email sent"}), 200
+    return jsonify({"msg": "Password reset email sent"}), 200
 
 
 def reset_password():
@@ -231,13 +231,13 @@ def reset_password():
     token = request.json.get("token")
     password = request.json.get("password")
     if not token or not password:
-        return jsonify({"message": "Missing required fields"}), 400
+        return jsonify({"msg": "Missing required fields"}), 400
 
     user_id = redis_client.get(token)
     if not user_id:
-        return jsonify({"message": "Invalid or expired token"}), 400
+        return jsonify({"msg": "Invalid or expired token"}), 400
 
-    user = User.query.get(user_id)
+    user = db.session.get(User, user_id)
 
     hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
     user.password = hashed_password
@@ -245,7 +245,7 @@ def reset_password():
 
     redis_client.delete(token)
 
-    return jsonify({"message": "Password reset successful"}), 200
+    return jsonify({"msg": "Password reset successful"}), 200
 
 @jwt_required(refresh=True)
 def refresh_token():
@@ -271,8 +271,8 @@ def admin_required(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         if not current_user.is_admin:
-            return jsonify({"message": "Unauthorized. Admins only"}), 403
-        return func(current_user, *args, **kwargs)
+            return jsonify({"msg": "Unauthorized. Admins only"}), 403
+        return func(*args, **kwargs)
 
     return wrapper
 
@@ -290,18 +290,3 @@ def get_all_users():
     user_data = [{"username": user.username, "email": user.email} for user in users]
 
     return jsonify({"users": user_data}), 200
-
-
-@jwt_required()
-@admin_required
-def make_admin(user_id):
-    """
-    Makes the current user an admin.
-
-    Returns:
-        tuple: A JSON response with a message and an HTTP status code.
-    """
-    user = User.query.get(user_id)
-    user.is_admin = True
-    db.session.commit()
-    return jsonify({"message": f"User with id {user_id} promoted to admin"}), 200

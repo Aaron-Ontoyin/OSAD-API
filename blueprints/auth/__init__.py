@@ -16,7 +16,6 @@ from .routes import (
     logout,
     refresh_token,
     get_all_users,
-    make_admin,
 )
 
 auth.post("/register")(register)
@@ -29,5 +28,4 @@ auth.patch("/change-password")(change_password)
 auth.get("/refresh-token")(refresh_token)
 auth.get("/password-reset-token")(get_password_reset_token)
 auth.patch("/reset-password")(reset_password)
-auth.patch("/make-admin")(make_admin)
 auth.get("/users")(get_all_users)

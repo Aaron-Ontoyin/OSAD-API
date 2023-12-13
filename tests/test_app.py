@@ -1,4 +1,6 @@
+import os
 import unittest
+
 from flask import Flask
 from app import app
 
@@ -9,6 +11,8 @@ class AppTestCase(unittest.TestCase):
         Set up the test environment by creating an instance of the Flask app and a test client.
         """
         self.app = app.test_client()
+        self.app.testing = True
+
 
     def test_flask_app_creation(self):
         """
@@ -37,15 +41,26 @@ class AppTestCase(unittest.TestCase):
         Returns:
             None
         """
-        self.assertEqual(app.__name__, "__main__")
         self.assertTrue(app.config["SQLALCHEMY_DATABASE_URI"])
         self.assertTrue(app.config["JWT_SECRET_KEY"])
+        self.assertTrue(app.config["JWT_ACCESS_TOKEN_EXPIRES"])
+        self.assertTrue(app.config["JWT_REFRESH_TOKEN_EXPIRES"])
+        self.assertTrue(app.config["REDIS_HOST"])
+        self.assertTrue(app.config["REDIS_PORT"])
+        self.assertTrue(app.config["SECRET_KEY"])
+        
 
     def test_environment_variables(self):
         """
         A function to test the environment variables.
         """
-        pass
+        self.assertTrue(os.environ.get("JWT_SECRET_KEY"))
+        self.assertTrue(os.environ.get("JWT_ACCESS_TOKEN_EXPIRES"))
+        self.assertTrue(os.environ.get("JWT_REFRESH_TOKEN_EXPIRES"))
+        self.assertTrue(os.environ.get("SQLALCHEMY_DATABASE_URI"))
+        self.assertTrue(os.environ.get("REDIS_HOST"))
+        self.assertTrue(os.environ.get("REDIS_PORT"))
+        self.assertTrue(os.environ.get("SECRET_KEY"))
 
     def test_authentication_blueprint(self):
         """
@@ -61,18 +76,18 @@ class AppTestCase(unittest.TestCase):
             None
         """
         self.assertIn("auth", app.blueprints)
-        self.assertEqual(app.blueprints["auth"].__name__, "auth")
+        self.assertEqual(app.blueprints["auth"].name, "auth")
         self.assertEqual(app.blueprints["auth"].__class__.__name__, "Blueprint")
         self.assertIn("object_detection", app.blueprints)
         self.assertEqual(
-            app.blueprints["object_detection"].__name__, "object_detection"
+            app.blueprints["object_detection"].name, "object_detection"
         )
         self.assertEqual(
             app.blueprints["object_detection"].__class__.__name__, "Blueprint"
         )
         self.assertIn("text_audio_processing", app.blueprints)
         self.assertEqual(
-            app.blueprints["text_audio_processing"].__name__, "text_audio_processing"
+            app.blueprints["text_audio_processing"].name, "text_audio_processing"
         )
         self.assertEqual(
             app.blueprints["text_audio_processing"].__class__.__name__, "Blueprint"

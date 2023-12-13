@@ -4,7 +4,7 @@ def audio_processer(audio):
     """
     # TODO: implement logic for audio processing
     
-    return {"text": "hello, {} came!".format(audio)}
+    return "This is the text produced from the audio url: {}".format(audio)
 
 
 def text_processer(text):
@@ -13,4 +13,4 @@ def text_processer(text):
     """
     # TODO: implement logic for text processing
     
-    return {"audio": "hello.mp4 {} came".format(text)}
+    return "This is the audio produced from the text url: {}".format(text)

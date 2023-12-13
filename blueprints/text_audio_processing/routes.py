@@ -9,10 +9,10 @@ def process_text():
     """
     Process the text and produce its audio equivalent
     """
-    text = request.form.get("text")
+    text = request.json.get("text")
     results = text_processer(text)
 
-    return jsonify(results), 200
+    return jsonify(audio_url=results), 200
 
 
 @jwt_required()
@@ -20,8 +20,7 @@ def process_audio():
     """
     Process the audio and produce its text equivalent
     """
-    audio = request.form.get("audio")
+    audio = request.json.get("audio")
     results = audio_processer(audio)
 
-    return jsonify(results), 200
-
+    return jsonify(text_url=results), 200
