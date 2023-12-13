@@ -34,13 +34,7 @@ This project implements a Flask API with user authentication and management feat
 
 ## API Endpoints
 
-* `/api/v1/users/register`: Register a new user.
-* `/api/v1/users/login`: Login an existing user.
-* `/api/v1/users/me`: Get logged-in user details.
-* `/api/v1/users/update`: Update logged-in user details.
-* `/api/v1/images`: Upload a new image.
-* `/api/v1/images/<id>`: Get information about a specific image.
-* `/api/v1/images`: Get all images uploaded by the logged-in user.
+
 
 ## Documentation
 
