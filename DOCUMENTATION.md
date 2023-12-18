@@ -1,7 +1,7 @@
 # OSAD API
 
 ## Introduction
-OSAD stands for Object Speech and Audio Detection. It is a powerful API designed to handle object storage and perform object detection tasks. The API provides endpoints for uploading images, detecting objects within those images, and managing user authentication.
+OSAD stands for Object Speech and Audio Detection. It is a powerful API designed to handle object storage and perform object detection tasks. The API provides endpoints for uploading images and detecting objects within those images, and managing user authentication.
 
 The object detection functionality uses advanced machine learning algorithms to identify and classify objects within an image. This can be used in a variety of applications, from surveillance and security to image tagging and organization.
 

@@ -12,8 +12,12 @@ db = SQLAlchemy()
 #------------------------------- REDIS DB -----------------------------------#
 import redis
 
+rurl = os.getenv("REDIS_URL")
+rhost = rurl.split(":")[1].strip("//")
+rport = rurl.split(":")[2].split("/")[0]
+rdb = rurl.split(":")[2].split("/")[1]
 redis_client = redis.StrictRedis(
-    host=os.getenv("REDIS_HOST"), port=os.getenv("REDIS_PORT"), db=0, decode_responses=True
+    host=rhost, port=rport, db=rdb, decode_responses=True
 )
 
 
