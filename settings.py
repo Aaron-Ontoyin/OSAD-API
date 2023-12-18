@@ -5,9 +5,10 @@ from datetime import timedelta
 load_dotenv()
 
 class Config:
+    SMTP_EMAIL_PASSWORD = os.getenv('SMTP_EMAIL_PASSWORD')
+    SMTP_EMAIL_ADDRESS = os.getenv('SMTP_EMAIL_ADDRESS')
     SECRET_KEY = os.getenv('SECRET_KEY')
-    REDIS_HOST = os.getenv('REDIS_HOST')
-    REDIS_PORT = os.getenv('REDIS_PORT')
+    REDIS_URL = os.getenv('REDIS_URL')
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(seconds=int(os.getenv('JWT_ACCESS_TOKEN_EXPIRES'))) or timedelta(hours=1)
     JWT_REFRESH_TOKEN_EXPIRES = timedelta(seconds=int(os.getenv('JWT_REFRESH_TOKEN_EXPIRES'))) or timedelta(days=30)

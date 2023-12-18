@@ -102,7 +102,7 @@ class ObjectDetectionBlueprintTestCase(unittest.TestCase):
 
         # Test success
         response = self.client.get(
-            "/object-detection/get-images",
+            "/object-detection/images",
             headers={"Authorization": f"Bearer {self.access_token}"},
         )
         self.assertEqual(response.status_code, 200)
@@ -133,7 +133,7 @@ class ObjectDetectionBlueprintTestCase(unittest.TestCase):
 
         # Test success
         response = self.client.get(
-            "/object-detection/get-image",
+            "/object-detection/image",
             json={"image_id": 1},
             headers={"Authorization": f"Bearer {self.access_token}"},
         )
@@ -164,7 +164,7 @@ class ObjectDetectionBlueprintTestCase(unittest.TestCase):
 
         # Test success
         response = self.client.delete(
-            "/object-detection/delete-image",
+            "/object-detection/image",
             json={"image_id": 1},
             headers={"Authorization": f"Bearer {self.access_token}"},
         )
@@ -172,7 +172,7 @@ class ObjectDetectionBlueprintTestCase(unittest.TestCase):
 
         # Test invalid image
         response = self.client.delete(
-            "/object-detection/delete-image",
+            "/object-detection/image",
             json={"image_id": 1},
             headers={"Authorization": f"Bearer {self.access_token}"},
         )

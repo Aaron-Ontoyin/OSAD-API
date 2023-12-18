@@ -10,7 +10,6 @@ db.init_app(app)
 bcrypt.init_app(app)
 jwt.init_app(app)
 with app.app_context():
-    # TODO: Create default admin
     db.create_all()
 
 app.register_blueprint(auth, url_prefix='/auth')

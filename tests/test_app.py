@@ -45,9 +45,10 @@ class AppTestCase(unittest.TestCase):
         self.assertTrue(app.config["JWT_SECRET_KEY"])
         self.assertTrue(app.config["JWT_ACCESS_TOKEN_EXPIRES"])
         self.assertTrue(app.config["JWT_REFRESH_TOKEN_EXPIRES"])
-        self.assertTrue(app.config["REDIS_HOST"])
-        self.assertTrue(app.config["REDIS_PORT"])
+        self.assertTrue(app.config["REDIS_URL"])
         self.assertTrue(app.config["SECRET_KEY"])
+        self.assertTrue(app.config["SMTP_EMAIL_ADDRESS"])
+        self.assertTrue(app.config["SMTP_EMAIL_PASSWORD"])
         
 
     def test_environment_variables(self):
@@ -58,9 +59,10 @@ class AppTestCase(unittest.TestCase):
         self.assertTrue(os.environ.get("JWT_ACCESS_TOKEN_EXPIRES"))
         self.assertTrue(os.environ.get("JWT_REFRESH_TOKEN_EXPIRES"))
         self.assertTrue(os.environ.get("SQLALCHEMY_DATABASE_URI"))
-        self.assertTrue(os.environ.get("REDIS_HOST"))
-        self.assertTrue(os.environ.get("REDIS_PORT"))
+        self.assertTrue(os.environ.get("REDIS_URL"))
         self.assertTrue(os.environ.get("SECRET_KEY"))
+        self.assertTrue(os.environ.get("SMTP_EMAIL_ADDRESS"))
+        self.assertTrue(os.environ.get("SMTP_EMAIL_PASSWORD"))
 
     def test_authentication_blueprint(self):
         """

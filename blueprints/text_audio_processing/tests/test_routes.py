@@ -86,7 +86,7 @@ class TextAudioBlueprintRoutesTestCase(unittest.TestCase):
         
     def test_get_audio_text(self):
         response = self.client.get(
-            "/tap/get-audio-text",
+            "/tap/audio-text",
             json={"audio_text_id": 1},
             headers={"Authorization": f"Bearer {self.access_token}"},
         )
@@ -97,7 +97,7 @@ class TextAudioBlueprintRoutesTestCase(unittest.TestCase):
 
     def test_get_all_audio_texts(self):
         response = self.client.get(
-            "/tap/get-all-audio-texts",
+            "/tap/audios-texts",
             headers={"Authorization": f"Bearer {self.access_token}"},
         )
         self.assertEqual(response.status_code, 200)
@@ -107,19 +107,20 @@ class TextAudioBlueprintRoutesTestCase(unittest.TestCase):
 
     def test_delete_audio_text(self):
         response = self.client.delete(
-            "/tap/delete-audio-text",
+            "/tap/audio-text",
             json={"audio_text_id": 1},
             headers={"Authorization": f"Bearer {self.access_token}"},
         )
         self.assertEqual(response.status_code, 204)
         # Unavailable audio text
         response = self.client.get(
-            "/tap/get-audio-text",
+            "/tap/audio-text",
             json={"audio_text_id": 1},
             headers={"Authorization": f"Bearer {self.access_token}"},
         )
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.json.get("msg"), "Audio text not found")
+
 
 if __name__ == "__main__":
     unittest.main()

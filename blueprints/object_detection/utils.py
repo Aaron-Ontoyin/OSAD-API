@@ -50,7 +50,7 @@ def detect_object(image, user_id):
             boxes=predictions["boxes"],
             labels=labels,
             colors="blue",
-            width=4,
+            width=2,
             font="arial",
             font_size=30,
         )

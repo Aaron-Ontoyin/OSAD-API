@@ -15,7 +15,7 @@ OSAD stands for Object Speech and Audio Detection. It is a powerful API designed
 
 - Flask: A Python micro web framework that provides tools and functionalities for building web applications.
 - SQLAlchemy: A SQL toolkit and Object-Relational Mapping (ORM) system for Python, providing a full suite of well-known enterprise-level persistence patterns.
-- Torch Vision: A part of the PyTorch project, providing tools and resources for Computer Vision research.
+- Torch Vision: A part of the PyTorch project, providing tools and resources for Computer Vision research. `fasterrcnn_resnet50_fpn_v2` with weights, `FasterRCNN_ResNet50_FPN_V2_Weights`
 - PIL (Python Imaging Library): A library for opening, manipulating, and saving many different image file formats in Python.
 - Bcrypt: A robust password hashing library for enhancing user security.
 - python-dotenv: A Python module that allows you to specify environment variables in traditional UNIX-like “.env” files.
@@ -24,6 +24,8 @@ OSAD stands for Object Speech and Audio Detection. It is a powerful API designed
 - pyttsx3: A text-to-speech conversion library in Python, capable of converting text into speech in multiple languages.
 - SMTP (Simple Mail Transfer Protocol): A protocol for sending email messages between servers, commonly used by Python’s smtplib for email services.
 - PyDub: A simple and easy-to-use Python library for audio manipulation.
+- PostgreSQL: A powerful, open-source object-relational database system.
+- Redis: It’s an in-memory data structure store.
 
 
 ## Getting Started
@@ -59,7 +61,7 @@ Redis is used for caching and task queueing. You can install it locally or use a
 
 ## Documentation
 
-For detailed documentation on API endpoints, request parameters, and response formats, please refer to the API documentation file `DOCUMENTATION.md`.
+For detailed documentation on API endpoints, request parameters, and response formats, please refer to the API documentation file [DOCUMENTATION] (DOCUMENTATION.md).
 
 ## Contributing
 
@@ -90,6 +92,8 @@ git push origin <branch-name>
 ```
 - Submit a Pull Request: Go to your forked repository on GitHub and click on the “New Pull Request” button. Fill in the necessary details and submit your pull request.
 
+- Be sure to add tests.
+
 
 ## License
-See [License](License)
+See [LICENSE](LICENSE)

@@ -1,14 +1,18 @@
 # OSAD API
 
 ## Introduction
-OSAD stands for Object Speech and Audio Detection. It is a powerful API designed to handle object storage and perform object detection tasks. The API provides endpoints for uploading images and detecting objects within those images, and managing user authentication.
+Here's the rewritten version:
 
-The object detection functionality uses advanced machine learning algorithms to identify and classify objects within an image. This can be used in a variety of applications, from surveillance and security to image tagging and organization.
+OSAD, an acronym for Object Speech and Audio Detection, is a robust API engineered to manage object storage and execute object detection tasks. The API offers endpoints for image uploads, object detection within these images, user authentication management, text to speech and speech to text.
 
-The API is designed with a focus on performance, scalability, and ease of use. It provides a robust set of features while maintaining a simple and intuitive interface, making it an excellent choice for developers looking to incorporate object detection and storage capabilities into their applications.
+The object detection feature employs sophisticated machine learning algorithms, specifically `fasterrcnn_resnet50_fpn_v2` with weights, `FasterRCNN_ResNet50_FPN_V2_Weights` from the torchvision.models.detection module, to pinpoint and categorize objects in an image. This functionality finds its application in a wide array of areas, ranging from security and surveillance to image tagging and organization.
+
+Designed with an emphasis on performance, scalability, and user-friendliness, the API boasts a comprehensive set of features while preserving a straightforward and intuitive interface.
 
 
 ## End Points
+
+## Object Detection
 
 ### Endpoint: `POST /object-detection/detect-image`
 
@@ -55,13 +59,7 @@ The API can return the following status codes:
 - `400`: The request was malformed. This could be due to not including an image in the request, or not including an `Authorization` header.
 - `500`: There was an error processing the request on the server.
 
----
-
-Please note that this is a basic documentation. Depending on the specifics of your API, you might want to include more information, such as rate limits, error messages for each status code, etc.
-
-Aaron-Ontoyin: write about the get image too. use the test_routes and routes as your reference
-
-GitHub Copilot: ## Endpoint: `GET /object-detection/get-image`
+### Endpoint: `GET /object-detection/image`
 
 This endpoint allows you to retrieve information about a previously processed image.
 
@@ -74,7 +72,7 @@ The request should also include an `Authorization` header with a bearer token.
 Example:
 
 ```bash
-curl -X GET -H "Authorization: Bearer YOUR_ACCESS_TOKEN" -d '{"image_id": 1}' -H "Content-Type: application/json" http://localhost:5000/object-detection/get-image
+curl -X GET -H "Authorization: Bearer YOUR_ACCESS_TOKEN" -d '{"image_id": 1}' -H "Content-Type: application/json" http://localhost:5000/object-detection/image
 ```
 
 #### Response
@@ -106,9 +104,7 @@ The API can return the following status codes:
 - `404`: The image with the provided `image_id` was not found.
 - `500`: There was an error processing the request on the server.
 
-Aaron-Ontoyin: write about the get images
-
-GitHub Copilot: ## Endpoint: `GET /object-detection/get-images`
+### Endpoint: `GET /object-detection/images`
 
 This endpoint allows you to retrieve information about all previously processed images by the current user.
 
@@ -121,7 +117,7 @@ The request should include an `Authorization` header with a bearer token.
 Example:
 
 ```bash
-curl -X GET -H "Authorization: Bearer YOUR_ACCESS_TOKEN" http://localhost:5000/object-detection/get-images
+curl -X GET -H "Authorization: Bearer YOUR_ACCESS_TOKEN" http://localhost:5000/object-detection/images
 ```
 
 #### Response
@@ -163,9 +159,7 @@ The API can return the following status codes:
 - `400`: The request was malformed. This could be due to not including an `Authorization` header.
 - `500`: There was an error processing the request on the server.
 
-Aaron-Ontoyin: write about the delete image
-
-GitHub Copilot: ## Endpoint: `DELETE /object-detection/delete-image`
+### Endpoint: `DELETE /object-detection/image`
 
 This endpoint allows you to delete a previously processed image.
 
@@ -178,7 +172,7 @@ The request should also include an `Authorization` header with a bearer token.
 Example:
 
 ```bash
-curl -X DELETE -H "Authorization: Bearer YOUR_ACCESS_TOKEN" -d '{"image_id": 1}' -H "Content-Type: application/json" http://localhost:5000/object-detection/delete-image
+curl -X DELETE -H "Authorization: Bearer YOUR_ACCESS_TOKEN" -d '{"image_id": 1}' -H "Content-Type: application/json" http://localhost:5000/object-detection/image
 ```
 
 #### Response
@@ -206,11 +200,10 @@ The API can return the following status codes:
 - `404`: The image with the provided `image_id` was not found.
 - `500`: There was an error processing the request on the server.
 
-Aaron-Ontoyin: using the text_audio_processing blueprint, write a documentation on the process_text
 
-GitHub Copilot: ## Text Audio Processing API
+## Text Audio Processing
 
-### Endpoint: `POST /text-audio-processing/process-text`
+### Endpoint: `POST /tap/process-text`
 
 This endpoint allows you to process text and produce its audio equivalent.
 
@@ -223,7 +216,7 @@ The request should also include an `Authorization` header with a bearer token.
 Example:
 
 ```bash
-curl -X POST -H "Authorization: Bearer YOUR_ACCESS_TOKEN" -d '{"text": "Hello, world!"}' -H "Content-Type: application/json" http://localhost:5000/text-audio-processing/process-text
+curl -X POST -H "Authorization: Bearer YOUR_ACCESS_TOKEN" -d '{"text": "Hello, world!"}' -H "Content-Type: application/json" http://localhost:5000/tap/process-text
 ```
 
 #### Response
@@ -250,9 +243,7 @@ The API can return the following status codes:
 - `400`: The request was malformed. This could be due to not including `text` in the request, or not including an `Authorization` header.
 - `500`: There was an error processing the request on the server.
 
-Aaron-Ontoyin: write on the process_audio
-
-GitHub Copilot: ## Endpoint: `POST /text-audio-processing/process-audio`
+### Endpoint: `POST /tap/process-audio`
 
 This endpoint allows you to process audio and produce its text equivalent.
 
@@ -265,7 +256,7 @@ The request should also include an `Authorization` header with a bearer token.
 Example:
 
 ```bash
-curl -X POST -H "Authorization: Bearer YOUR_ACCESS_TOKEN" -F "audio=@test_audio.mp3" http://localhost:5000/text-audio-processing/process-audio
+curl -X POST -H "Authorization: Bearer YOUR_ACCESS_TOKEN" -F "audio=@test_audio.mp3" http://localhost:5000/tap/process-audio
 ```
 
 #### Response
@@ -292,9 +283,7 @@ The API can return the following status codes:
 - `400`: The request was malformed. This could be due to not including an audio file in the request, or not including an `Authorization` header.
 - `500`: There was an error processing the request on the server.
 
-Aaron-Ontoyin: write on get audios
-
-GitHub Copilot: ## Endpoint: `GET /text-audio-processing/get-audios`
+### Endpoint: `GET /tap/audios-texts`
 
 This endpoint allows you to retrieve information about all previously processed audio files by the current user.
 
@@ -307,7 +296,7 @@ The request should include an `Authorization` header with a bearer token.
 Example:
 
 ```bash
-curl -X GET -H "Authorization: Bearer YOUR_ACCESS_TOKEN" http://localhost:5000/text-audio-processing/get-audios
+curl -X GET -H "Authorization: Bearer YOUR_ACCESS_TOKEN" http://localhost:5000/tap/audios-texts
 ```
 
 #### Response
@@ -346,9 +335,7 @@ The API can return the following status codes:
 - `400`: The request was malformed. This could be due to not including an `Authorization` header.
 - `500`: There was an error processing the request on the server.
 
-Aaron-Ontoyin: write on get_audio
-
-GitHub Copilot: ## Endpoint: `GET /text-audio-processing/get-audio`
+### Endpoint: `GET /tap/audio-text`
 
 This endpoint allows you to retrieve information about a specific previously processed audio file.
 
@@ -361,7 +348,7 @@ The request should also include an `Authorization` header with a bearer token.
 Example:
 
 ```bash
-curl -X GET -H "Authorization: Bearer YOUR_ACCESS_TOKEN" -d '{"audio_text_id": 1}' -H "Content-Type: application/json" http://localhost:5000/text-audio-processing/get-audio
+curl -X GET -H "Authorization: Bearer YOUR_ACCESS_TOKEN" -d '{"audio_text_id": 1}' -H "Content-Type: application/json" http://localhost:5000/tap/audio-text
 ```
 
 #### Response
@@ -393,9 +380,7 @@ The API can return the following status codes:
 - `404`: The audio file with the provided `audio_text_id` was not found.
 - `500`: There was an error processing the request on the server.
 
-Aaron-Ontoyin: write on delete audio
-
-GitHub Copilot: ## Endpoint: `DELETE /text-audio-processing/delete-audio`
+### Endpoint: `DELETE /tap/audio-text`
 
 This endpoint allows you to delete a specific previously processed audio file.
 
@@ -408,7 +393,7 @@ The request should also include an `Authorization` header with a bearer token.
 Example:
 
 ```bash
-curl -X DELETE -H "Authorization: Bearer YOUR_ACCESS_TOKEN" -d '{"audio_text_id": 1}' -H "Content-Type: application/json" http://localhost:5000/text-audio-processing/delete-audio
+curl -X DELETE -H "Authorization: Bearer YOUR_ACCESS_TOKEN" -d '{"audio_text_id": 1}' -H "Content-Type: application/json" http://localhost:5000/tap/audio-text
 ```
 
 #### Response
@@ -436,9 +421,8 @@ The API can return the following status codes:
 - `404`: The audio file with the provided `audio_text_id` was not found.
 - `500`: There was an error processing the request on the server.
 
-Aaron-Ontoyin: Using the auth blueprint, write on register
 
-GitHub Copilot: ## Auth API
+## Authentication
 
 ### Endpoint: `POST /auth/register`
 
@@ -475,10 +459,6 @@ The API can return the following status codes:
 - `201`: The request was successful, and the user was registered.
 - `400`: The request was malformed. This could be due to missing fields, or a username or email that already exists.
 - `500`: There was an error processing the request on the server.
-
-Aaron-Ontoyin: write on login
-
-GitHub Copilot: ## Auth API
 
 ### Endpoint: `POST /auth/login`
 
@@ -519,11 +499,7 @@ The API can return the following status codes:
 - `401`: The username was not found or the password was incorrect.
 - `500`: There was an error processing the request on the server.
 
-Aaron-Ontoyin: write on logout
-
-GitHub Copilot: ## Auth API
-
-### Endpoint: `POST /auth/logout`
+### Endpoint: `DELETE /auth/logout`
 
 This endpoint allows you to log out the current user by revoking their JWT access token and associated refresh tokens.
 
@@ -536,7 +512,7 @@ The request should include an `Authorization` header with a bearer token.
 Example:
 
 ```bash
-curl -X POST -H "Authorization: Bearer YOUR_ACCESS_TOKEN" http://localhost:5000/auth/logout
+curl -X DELETE -H "Authorization: Bearer YOUR_ACCESS_TOKEN" http://localhost:5000/auth/logout
 ```
 
 #### Response
@@ -557,11 +533,7 @@ The API can return the following status codes:
 - `401`: No current user was found.
 - `500`: There was an error processing the request on the server.
 
-Aaron-Ontoyin: write on get_user
-
-GitHub Copilot: ## Auth API
-
-### Endpoint: `GET /auth/get-user`
+### Endpoint: `GET /auth/user`
 
 This endpoint allows you to retrieve information about the currently logged-in user.
 
@@ -574,7 +546,7 @@ The request should include an `Authorization` header with a bearer token.
 Example:
 
 ```bash
-curl -X GET -H "Authorization: Bearer YOUR_ACCESS_TOKEN" http://localhost:5000/auth/get-user
+curl -X GET -H "Authorization: Bearer YOUR_ACCESS_TOKEN" http://localhost:5000/auth/user
 ```
 
 #### Response
@@ -611,11 +583,7 @@ The API can return the following status codes:
 - `401`: The user is not logged in.
 - `500`: There was an error processing the request on the server.
 
-Aaron-Ontoyin: write on update_user
-
-GitHub Copilot: ## Auth API
-
-### Endpoint: `PUT /auth/update-user`
+### Endpoint: `PATCH /auth/user`
 
 This endpoint allows you to update the information of the currently logged-in user.
 
@@ -628,7 +596,7 @@ The request should include an `Authorization` header with a bearer token.
 Example:
 
 ```bash
-curl -X PUT -H "Authorization: Bearer YOUR_ACCESS_TOKEN" -d '{"firstname": "NewFirstName", "lastname": "NewLastName"}' -H "Content-Type: application/json" http://localhost:5000/auth/update-user
+curl -X PATCH -H "Authorization: Bearer YOUR_ACCESS_TOKEN" -d '{"firstname": "NewFirstName", "lastname": "NewLastName"}' -H "Content-Type: application/json" http://localhost:5000/auth/user
 ```
 
 #### Response
@@ -652,11 +620,7 @@ The API can return the following status codes:
 - `404`: The user was not found.
 - `500`: There was an error processing the request on the server.
 
-Aaron-Ontoyin: write on delete user
-
-GitHub Copilot: ## Auth API
-
-### Endpoint: `DELETE /auth/delete-user`
+### Endpoint: `DELETE /auth/user`
 
 This endpoint allows you to delete the currently logged-in user.
 
@@ -669,7 +633,7 @@ The request should include an `Authorization` header with a bearer token.
 Example:
 
 ```bash
-curl -X DELETE -H "Authorization: Bearer YOUR_ACCESS_TOKEN" http://localhost:5000/auth/delete-user
+curl -X DELETE -H "Authorization: Bearer YOUR_ACCESS_TOKEN" http://localhost:5000/auth/user
 ```
 
 #### Response
@@ -689,11 +653,7 @@ The API can return the following status codes:
 - `404`: The user was not found.
 - `500`: There was an error processing the request on the server.
 
-Aaron-Ontoyin: write on change password
-
-GitHub Copilot: ## Auth API
-
-### Endpoint: `PUT /auth/change-password`
+### Endpoint: `PATCH /auth/change-password`
 
 This endpoint allows you to change the password of the currently logged-in user.
 
@@ -706,7 +666,7 @@ The request should include an `Authorization` header with a bearer token.
 Example:
 
 ```bash
-curl -X PUT -H "Authorization: Bearer YOUR_ACCESS_TOKEN" -d '{"old_password": "oldpassword", "new_password": "newpassword"}' -H "Content-Type: application/json" http://localhost:5000/auth/change-password
+curl -X PATCH -H "Authorization: Bearer YOUR_ACCESS_TOKEN" -d '{"old_password": "oldpassword", "new_password": "newpassword"}' -H "Content-Type: application/json" http://localhost:5000/auth/change-password
 ```
 
 #### Response
@@ -732,11 +692,7 @@ The API can return the following status codes:
 - `401`: The old password was incorrect.
 - `500`: There was an error processing the request on the server.
 
-Aaron-Ontoyin: write on get_password_reset_token
-
-GitHub Copilot: ## Auth API
-
-### Endpoint: `POST /auth/get-password-reset-token`
+### Endpoint: `GET /auth/password-reset-token`
 
 This endpoint allows you to request a password reset token for a user.
 
@@ -747,7 +703,7 @@ The request should be a `POST` request with the `email` included in the JSON bod
 Example:
 
 ```bash
-curl -X POST -d '{"email": "testuser@example.com"}' -H "Content-Type: application/json" http://localhost:5000/auth/get-password-reset-token
+curl -X GET -d '{"email": "testuser@example.com"}' -H "Content-Type: application/json" http://localhost:5000/auth/password-reset-token
 ```
 
 #### Response
@@ -773,11 +729,7 @@ The API can return the following status codes:
 - `404`: The user was not found.
 - `500`: There was an error processing the request on the server.
 
-Aaron-Ontoyin: write on rese_password
-
-GitHub Copilot: ## Auth API
-
-### Endpoint: `POST /auth/reset-password`
+### Endpoint: `PATCH /auth/reset-password`
 
 This endpoint allows you to reset a user's password using a password reset token.
 
@@ -788,7 +740,7 @@ The request should be a `POST` request with the `token` and `password` included 
 Example:
 
 ```bash
-curl -X POST -d '{"token": "your-reset-token", "password": "newpassword"}' -H "Content-Type: application/json" http://localhost:5000/auth/reset-password
+curl -X PATCH -d '{"token": "your-reset-token", "password": "newpassword"}' -H "Content-Type: application/json" http://localhost:5000/auth/reset-password
 ```
 
 #### Response
@@ -813,11 +765,7 @@ The API can return the following status codes:
 - `400`: The request was malformed. This could be due to missing fields or an invalid or expired token.
 - `500`: There was an error processing the request on the server.
 
-Aaron-Ontoyin: write on refresh_token
-
-GitHub Copilot: ## Auth API
-
-### Endpoint: `POST /auth/refresh-token`
+### Endpoint: `GET /auth/refresh-token`
 
 This endpoint allows you to refresh the access token of the currently logged-in user.
 
@@ -830,7 +778,7 @@ The request should include an `Authorization` header with a bearer token.
 Example:
 
 ```bash
-curl -X POST -H "Authorization: Bearer YOUR_REFRESH_TOKEN" http://localhost:5000/auth/refresh-token
+curl -X GET -H "Authorization: Bearer YOUR_REFRESH_TOKEN" http://localhost:5000/auth/refresh-token
 ```
 
 #### Response
@@ -855,11 +803,7 @@ The API can return the following status codes:
 - `401`: The user is not logged in or the refresh token is invalid.
 - `500`: There was an error processing the request on the server.
 
-Aaron-Ontoyin: write on get_all_users
-
-GitHub Copilot: ## Auth API
-
-### Endpoint: `GET /auth/get-all-users`
+### Endpoint: `GET /auth/users`
 
 This endpoint allows you to retrieve information about all users if the requester is an admin.
 
@@ -872,7 +816,7 @@ The request should include an `Authorization` header with a bearer token.
 Example:
 
 ```bash
-curl -X GET -H "Authorization: Bearer YOUR_ACCESS_TOKEN" http://localhost:5000/auth/get-all-users
+curl -X GET -H "Authorization: Bearer YOUR_ACCESS_TOKEN" http://localhost:5000/auth/users
 ```
 
 #### Response

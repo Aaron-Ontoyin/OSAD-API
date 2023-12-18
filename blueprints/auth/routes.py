@@ -12,7 +12,7 @@ from flask_jwt_extended import (
 
 from .models import User
 from .utils import generate_password_reset_token
-from utils import jwt, redis_client, db, bcrypt, send_email
+from utils import jwt, redis_client, db, bcrypt, send_mail
 
 
 INVALID_USER_MESSAGE = "Invalid user"
@@ -219,7 +219,7 @@ def get_password_reset_token():
     Use the token below to reset your password: {token}
     This token will expire in 30 minutes!
     """
-    send_email(user, "OSAD Password Reset", email_body)
+    send_mail(to=email, title="OSAD Password Reset", msg=email_body)
 
     return jsonify({"msg": "Password reset email sent"}), 200
 
