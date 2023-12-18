@@ -1,9 +1,9 @@
-from flask import request, jsonify
+from flask import request, jsonify, make_response
 from flask_jwt_extended import jwt_required, current_user
 
 from utils import db
 
-from .utils import detect_object, store_image_in_database
+from .utils import detect_object
 from .models import Image
 
 
@@ -13,16 +13,17 @@ def detect_image():
     Detect the object in the image
     """
     image = request.files.get("image")
+
     if not image:
         return jsonify({"msg": "No image provided"}), 400
-    results = detect_object(image)
-    store_image_in_database(
-        image=image,
-        detected_as=results["label"],
-        description=results["description"],
-        user_id=current_user.id,
-    )
-    return jsonify(results), 200
+
+    if image.filename.split(".")[-1] not in ["jpg", "jpeg", "png"]:
+        return jsonify({"msg": "Invalid image format. Provide a .jp(e)g or .png"}), 400
+
+
+    results, file_path = detect_object(image, current_user.id)
+
+    return jsonify(detected_objs=results, img_url=file_path), 200
 
 
 @jwt_required()
@@ -51,7 +52,12 @@ def get_image():
     Get the image of this user
     """
     image_id = request.json.get("image_id")
-    image = db.session.get(Image, image_id)
+    image = (
+        db.session.query(Image).filter_by(id=image_id, user_id=current_user.id).first()
+    )
+    if not image:
+        return jsonify({"msg": "Image not found"}), 404
+
     return (
         jsonify(
             {
@@ -73,9 +79,11 @@ def delete_image():
     Delete the image of this user
     """
     image_id = request.json.get("image_id")
-    image = db.session.get(Image, image_id)
+    image = (
+        db.session.query(Image).filter_by(id=image_id, user_id=current_user.id).first()
+    )
     if not image:
         return jsonify({"msg": "Image not found"}), 404
     db.session.delete(image)
     db.session.commit()
-    return jsonify({"msg": "Image deleted successfully"}), 204
+    return make_response("", 204)

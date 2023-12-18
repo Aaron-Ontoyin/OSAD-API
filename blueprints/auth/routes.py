@@ -1,7 +1,7 @@
 import os
 from functools import wraps
 
-from flask import request, jsonify
+from flask import request, jsonify, make_response
 from flask_jwt_extended import (
     create_access_token,
     create_refresh_token,
@@ -174,7 +174,7 @@ def delete_user():
     db.session.delete(current_user)
     db.session.commit()
 
-    return (jsonify({"msg": f"User deleted successfully"}), 200)
+    return make_response("", 204)
 
 
 @jwt_required()

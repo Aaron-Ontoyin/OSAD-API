@@ -222,8 +222,7 @@ class AuthBlueprintTestCase(unittest.TestCase):
         Test the delete user route.
         """
         response = self.client.delete("/auth/user", headers={"Authorization": f"Bearer {self.access_token}"})
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json["msg"], "User deleted successfully")
+        self.assertEqual(response.status_code, 204)
         response = self.client.get("/auth/user", headers={"Authorization": f"Bearer {self.access_token}"})
         self.assertEqual(response.status_code, 401)
         self.assertIn("Error loading the user", response.json["msg"])
