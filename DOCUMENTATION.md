@@ -1,7 +1,6 @@
 # OSAD API
 
 ## Introduction
-Here's the rewritten version:
 
 OSAD, an acronym for Object Speech and Audio Detection, is a robust API engineered to manage object storage and execute object detection tasks. The API offers endpoints for image uploads, object detection within these images, user authentication management, text to speech and speech to text.
 
